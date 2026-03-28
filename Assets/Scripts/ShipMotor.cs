@@ -118,7 +118,5 @@ public class ShipMotor : MonoBehaviour
         {
             rb.angularVelocity = rb.angularVelocity.normalized * maxAngularSpeed;
         }
-    }
-
-    
+    }  
 }
