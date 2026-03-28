@@ -1,12 +1,14 @@
-/* using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+=======
+>>>>>>> ddbb4cdad82a772c4c6fdbf4e98932ebaa5ab42e
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private ProceduralBlockGenerator blockGenerator;
-    [SerializeField] private GameObject[] enemyPrefab;
+    public ProceduralBlockGenerator blockGenerator;
+    public GameObject[] enemyPrefab;
 
     [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 10f;
@@ -14,15 +16,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnRandomRadius = 3f;  // Random radius around spawn point
 
     private float timeSinceLastSpawn = 0f;
-    private List<GameObject> spawnedBlocks = new List<GameObject>();
 
     private void Start()
     {
         if (blockGenerator == null)
             blockGenerator = FindObjectOfType<ProceduralBlockGenerator>();
 
-        if (enemyPrefab == null)
-            Debug.LogError("EnemySpawner: Enemy prefab not assigned!");
+        if (enemyPrefab == null || enemyPrefab.Length == 0)
+            Debug.LogError("EnemySpawner: Enemy prefab array is empty.", this);
 
         timeSinceLastSpawn = spawnInterval;  // Spawn first enemy immediately
     }
@@ -40,19 +41,30 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (enemyPrefab == null || blockGenerator == null)
+        if (enemyPrefab == null || enemyPrefab.Length == 0 || blockGenerator == null)
             return;
 
         // Try to find a valid spawn position on a loaded block multiple times
         for (int attempts = 0; attempts < 5; attempts++)
         {
             Vector3 spawnPos = GetRandomSpawnPosition();
+<<<<<<< HEAD
             
             if (spawnPos != Vector3.zero)
             {
-                Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+                GameObject prefabToUse = enemyPrefab[Random.Range(0, enemyPrefab.Length)];
+                Instantiate(prefabToUse, spawnPos, Quaternion.identity);
                 return;
             }
+=======
+
+            GameObject prefabToSpawn = enemyPrefab[Random.Range(0, enemyPrefab.Length)];
+            if (prefabToSpawn == null)
+                continue;
+
+            Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
+            return;
+>>>>>>> c9248c78b873051985bcecbe5b2ecd063a6c6c06
         }
 
         Debug.LogWarning("EnemySpawner: Could not find valid spawn position after 5 attempts");
@@ -61,10 +73,10 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 GetRandomSpawnPosition()
     {
         // Get a random position from a loaded block
-        if (blockGenerator.GetSpawnedBlockCount() == 0)
+        if (!blockGenerator.HasSpawnedBlocks())
         {
             // No blocks spawned yet, spawn near player
-            Vector3 playerPos = blockGenerator.player.position;
+            Vector3 playerPos = blockGenerator.GetPlayerPosition();
             Vector3 randomOffset = Random.insideUnitSphere * blockGenerator.generationRadiusX * 0.5f;
             return playerPos + randomOffset + Vector3.up * spawnOffsetHeight;
         }
@@ -79,11 +91,10 @@ public class EnemySpawner : MonoBehaviour
     private void OnDrawGizmos()
     {
         // Visualization for spawn radius
-        if (blockGenerator != null && blockGenerator.player != null)
+        if (blockGenerator != null)
         {
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(blockGenerator.player.position + Vector3.up * spawnOffsetHeight, spawnRandomRadius);
+            Gizmos.DrawWireSphere(blockGenerator.GetPlayerPosition() + Vector3.up * spawnOffsetHeight, spawnRandomRadius);
         }
     }
 }
-*/

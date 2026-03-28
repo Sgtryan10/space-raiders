@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NPCController : MonoBehaviour
 {
@@ -40,7 +39,7 @@ public class NPCController : MonoBehaviour
         Attack
     }
 
-    private NPCState state = NPCState.Patrol;
+    private NPCState state = NPCState.Chase;
     private int waypointIndex = 0;
 
     private void Awake()
@@ -171,12 +170,6 @@ public class NPCController : MonoBehaviour
             default:
                 return null;
         }
-    }
-
-    private void CheckDeath()
-    {
-        if (state == NPCState.Attack)
-            SceneManager.LoadScene("GameOver");
     }
 
     private void OnTriggerEnter(Collider other)
