@@ -1,32 +1,32 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class speedBar : MonoBehaviour
 {
     public Image speedFill;
     public Gradient speedGradient;
+    public TextMeshProUGUI speedText;
+
+    public ShipMotor ship;
     public float maxSpeed = 100f;
-    private float currentSpeed;
 
-    void Start()
+    void Update()
     {
-        currentSpeed = 0;
-        UpdateUI();
+        if (ship != null)
+        {
+            float currentVelocity = ship.getVelocity();
+            float fillPercent = Mathf.Clamp01(currentVelocity / maxSpeed);
+
+            UpdateUI(fillPercent, currentVelocity);
+        }
     }
 
-    public void UpdateHealth(float amount)
+    void UpdateUI(float fillPercent, float rawSpeed)
     {
-        currentSpeed = Mathf.Clamp(currentSpeed + amount, 0, maxSpeed);
-        UpdateUI();
-    }
-
-    void UpdateUI()
-    {
-        float fillPercent = currentSpeed / maxSpeed;
-
         speedFill.fillAmount = fillPercent;
-
         speedFill.color = speedGradient.Evaluate(fillPercent);
+
+        speedText.text = rawSpeed.ToString("F0") + " M/s";
     }
 }
-
