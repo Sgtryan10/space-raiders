@@ -265,4 +265,39 @@ public class ProceduralBlockGenerator : MonoBehaviour
             Gizmos.DrawCube(zone.position, zone.size);
         }
     }
+
+    /// <summary>
+    /// Gets a random position from a loaded block, useful for spawning enemies
+    /// </summary>
+    public Vector3 GetRandomBlockPosition()
+    {
+        if (spawnedBlocks.Count == 0)
+            return player.position;
+
+        // Find a non-null block
+        GameObject randomBlock = null;
+        int attempts = 0;
+        
+        while (randomBlock == null && attempts < 10)
+        {
+            int randomIndex = Random.Range(0, spawnedBlocks.Count);
+            randomBlock = spawnedBlocks[randomIndex];
+            attempts++;
+        }
+
+        if (randomBlock != null)
+        {
+            return randomBlock.transform.position;
+        }
+
+        return player.position;
+    }
+
+    /// <summary>
+    /// Gets the count of currently spawned blocks
+    /// </summary>
+    public int GetSpawnedBlockCount()
+    {
+        return spawnedBlocks.Count;
+    }
 }
