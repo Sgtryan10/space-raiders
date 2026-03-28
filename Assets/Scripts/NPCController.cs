@@ -19,7 +19,7 @@ public class NPCController : MonoBehaviour
     [Header("Ranges")]
     [SerializeField] private float chaseRange = 80f;
     [SerializeField] private float attackRange = 12f;
-    [SerializeField] private float killRange = 2f;
+    [SerializeField] private float killRange = 5f;
 
     [Header("Throttle")]
     [SerializeField] private float patrolThrust = 1f;
