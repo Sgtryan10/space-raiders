@@ -39,7 +39,7 @@ public class NPCController : MonoBehaviour
         Attack
     }
 
-    private NPCState state = NPCState.Patrol;
+    private NPCState state = NPCState.Chase;
     private int waypointIndex = 0;
 
     private void Awake()
