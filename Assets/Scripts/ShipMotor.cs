@@ -1,3 +1,4 @@
+using System.Dynamic;
 using UnityEngine;
 
 public class ShipMotor : MonoBehaviour
@@ -117,5 +118,5 @@ public class ShipMotor : MonoBehaviour
         {
             rb.angularVelocity = rb.angularVelocity.normalized * maxAngularSpeed;
         }
-    }
+    }  
 }
