@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+=======
+>>>>>>> ddbb4cdad82a772c4c6fdbf4e98932ebaa5ab42e
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -44,7 +48,6 @@ public class EnemySpawner : MonoBehaviour
         for (int attempts = 0; attempts < 5; attempts++)
         {
             Vector3 spawnPos = GetRandomSpawnPosition();
-<<<<<<< HEAD
             
             if (spawnPos != Vector3.zero)
             {
@@ -52,7 +55,6 @@ public class EnemySpawner : MonoBehaviour
                 Instantiate(prefabToUse, spawnPos, Quaternion.identity);
                 return;
             }
-=======
 
             GameObject prefabToSpawn = enemyPrefab[Random.Range(0, enemyPrefab.Length)];
             if (prefabToSpawn == null)
@@ -60,7 +62,6 @@ public class EnemySpawner : MonoBehaviour
 
             Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
             return;
->>>>>>> c9248c78b873051985bcecbe5b2ecd063a6c6c06
         }
 
         Debug.LogWarning("EnemySpawner: Could not find valid spawn position after 5 attempts");
