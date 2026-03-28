@@ -7,6 +7,7 @@ public class PlayerShipInput : MonoBehaviour
     [Header("Input")]
     [SerializeField] private float pitchSensitivity = 1.5f;
     [SerializeField] private float yawSensitivity = 0.35f;
+    [SerializeField] private float keyboardBankAmount = 0.35f;
 
     [Header("Keys")]
     [SerializeField] private KeyCode boostKey = KeyCode.LeftShift;
@@ -35,9 +36,10 @@ public class PlayerShipInput : MonoBehaviour
 
         float yaw = Mathf.Clamp(keyboardYaw + mouseYaw, -1f, 1f);
 
-        float manualRoll = 0f;
+        float manualRoll = -keyboardYaw * keyboardBankAmount;
         if (Input.GetKey(rollLeftKey)) manualRoll += 1f;
         if (Input.GetKey(rollRightKey)) manualRoll -= 1f;
+        manualRoll = Mathf.Clamp(manualRoll, -1f, 1f);
 
         bool boost = Input.GetKey(boostKey);
 
